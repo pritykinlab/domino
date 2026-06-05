@@ -24,7 +24,6 @@ def drop_blacklist(
     X: pd.DataFrame,
     blacklist_path: str 
 ) -> tuple[pd.DataFrame, np.ndarray]:
-    # '/scratch/gpfs/PRITYKIN/brendan/microc_preprocessing/annotations/dm6-blacklist.v2.bed
     """Drop blacklisted regions from current dataframe."""
     blacklisted_regions_df = bioframe.read_table(blacklist_path)
     blacklisted_regions_df.columns = ['chrom', 'start', 'end', 'description']
