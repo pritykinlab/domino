@@ -1,0 +1,7 @@
+---
+samples:
+ - nc14_embryo_1
+ - nc14_embryo_2
+genome_index: /path/to/genome_index
+chrom_size_file: /path/to/chrom_size_file
+...

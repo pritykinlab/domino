@@ -1,0 +1,38 @@
+# Snakefile for preprocessing fastq data.
+
+configfile: 'config.yml'
+localrules: all
+
+SAMPLES = config['samples'] # takes all samples that correspond to raw reads
+PAIR = expand('/path/to/folder/{sample}_output.pairs.gz'.split(), sample = SAMPLES)
+
+GENOME_INDEX = config['genome_index']
+CHROM_SIZES_FILE = config['chrom_size_file']
+
+# list all the files that should be expected once the workflow is finished running
+# we only want all an output.pairs.gz file for each sample
+rule all:
+	input:
+		PAIR 
+
+rule workflow:
+	input:
+		r1 = '{sample}-read-1.fastq.gz',
+		r2 = '{sample}-read-2.fastq.gz'
+	output:
+		'{sample}_output.pairs.gz'
+	params: 
+		genome_index=GENOME_INDEX,
+		chrom_sizes_file=CHROM_SIZES_FILE
+	shell:
+		"""
+		bwa mem -SP5M -t16 -v 0 {params.genome_index} \
+        {input.r1} {input.r2} | \
+        samtools view -bhS | \
+        samtools view -h | \
+        pairtools parse --nproc-in 16 --walks-policy all -c {params.chrom_sizes_file} | \
+        pairtools sort --nproc 16 --tmpdir ./tmp | \
+        pairtools dedup --nproc-in 16 --chunksize 20000 --mark-dups | \
+        pairtools select '(pair_type == "UU") or (pair_type == "UR") or (pair_type == "RU")' | \
+        pairtools split --output-pairs {output}
+		"""
