@@ -21,7 +21,7 @@ After setting up the environment, you will want to convert raw data into contact
 
 Briefly, the folder contains a pipeline that assumes that your data comes in the raw FASTQ files (paired end reads) for 3C data. A Snakefile can be used to automate converting paired end reads in FASTQ form to a .cool file. From here, you can use merge and zoomify cool files to generate a .mcool file. The script also computes insulation score and boundaries using the FAN-C package.
 
-# Model training and evaluation
+## Model training and evaluation
 
 From here, you can run python train_domino_model.py which has the following arguments:
 - out_folder: name of folder to which you save your model
