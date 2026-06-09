@@ -4,7 +4,7 @@ Domino, which stands for DNA-to-Insulation-Score Model for Analyzing Insulation 
 
 ## Package installation
 
-To get started, clone this repository using `git clone`. Then, move into the directory and create a Conda environment for DOMINO, use the following command:
+To get started, clone this repository using `git clone`. Then, move into the directory and create a Conda environment for DOMINO using the following command:
 ```
 conda env create --name domino --file domino_environment.yml
 ```
