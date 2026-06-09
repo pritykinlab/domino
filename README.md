@@ -6,7 +6,7 @@ Domino, which stands for DNA-to-Insulation-Score Model for Analyzing Insulation 
 
 To create a Conda environment for DOMINO, use the following command:
 ```
-conda env create --name domino --file environment.yml
+conda env create --name domino --file domino_environment.yml
 ```
 
 Install the domino package:
@@ -17,13 +17,14 @@ pip install -e .
 
 ## Data preprocessing
 
-After setting up the environment, you will want to convert raw data into contact maps. We provide scripts that you can reference in the `scr/processing` folder. Please refer to the `README.md` file in the folder for instructions.
+After setting up the environment, you will want to convert raw data into contact maps. We provide scripts that you can reference in the `scr/preprocessing` folder. Please refer to the `README.md` file in the folder for instructions.
 
 Briefly, the folder contains a pipeline that assumes that your data comes in the raw FASTQ files (paired end reads) for 3C data. A Snakefile can be used to automate converting paired end reads in FASTQ form to a .cool file. From here, you can use merge and zoomify cool files to generate a .mcool file. The script also computes insulation score and boundaries using the FAN-C package.
 
 ## Model training and evaluation
 
-From here, you can run python train_domino_model.py which has the following arguments:
+To get you started, we provide an example script in `src/training/train_domino_example.sh` you can customize and run. In the script, you will run the module `python train_domino_model.py` which has the following arguments:
+
 - `out_folder`: name of folder to which you save your model
 - `delta`: the delta parameter from FAN-C used to compute boundaries (default: `2`)
 - `ins_window_size`: window size for insulation score 
