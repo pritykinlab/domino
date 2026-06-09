@@ -24,32 +24,32 @@ Briefly, the folder contains a pipeline that assumes that your data comes in the
 ## Model training and evaluation
 
 From here, you can run python train_domino_model.py which has the following arguments:
-- out_folder: name of folder to which you save your model
-- delta: the delta parameter from FAN-C used to compute boundaries (default: 2)
-- ins_window_size: window size for insulation score 
-- model_type: type of model used to train; usually this will be DominoSingleOutput, which means to compute single insulation score
-- demean_context_bin_width: number of bins (radius) used for mean-scale normalization
-- DNA_context_bin_width: number of bins (radius) of DNA sequence used as input to the model 
-- ins1_path: path to insulation score file corresponding to first dataset of replicates 
-- ins2_path: path to insulation score file corresponding to second dataset of replicates (if it exists)
-- train_coords_dict: dictionary of the form '{"full_chr_names": [list of chroms]}' used for training; example is '{"full_chr_names": ["chr2L", "chr3L", "chr3R", "chr4", "chrX", "chrY"]}'
-- val_coords_dict: dictionary of the form '{"chrom_to_subset": chrom, "min_start": start_value}' used for validation; example is '{"chrom_to_subset": "chr2R", "min_start": 15000000}'
-- test_coords_dict: dictionary of the form '{"chrom_to_subset": chrom, "max_end": max_value}' used for testing; example is '{"chrom_to_subset": "chr2R", "max_end": 14996800}'
-- bound_path: path to boundary file corresponding to boundaries in first dataset of replicates
-- boundary_length: size of each boundary; this will also be the resolution or bin size of the .mcool file used generate insulation scores and boundaries
-- batch_size: number of data points used in each batch for training and evaluation
-- learning_rate: learning rate (default: 1e-4)
-- scheduler: learning rate scheduler (default: plateau)
-- conv_layers: number of convolutional layers in model 
-- conv_repeat: number of convolutional blocks in model
-- kernel_number: number of kernels in first convolutional layer
-- kernel_length: kernel size in first convolutional layer 
-- filter_number: number of kernels in intermediate convolutional layers
-- filter_size: kernel size in intermediate convolutional layers
-- h_layers: number of hidden layers in head module 
-- hidden_size: size of each hidden layer 
-- activation: activation function (default: GeLU) 
-- blacklist_path: path to list of blacklisted regions
+- `out_folder`: name of folder to which you save your model
+- `delta`: the delta parameter from FAN-C used to compute boundaries (default: `2`)
+- `ins_window_size`: window size for insulation score 
+- `model_type`: type of model used to train; usually this will be DominoSingleOutput, which means to compute single insulation score
+- `demean_context_bin_width`: number of bins (radius) used for mean-scale normalization
+- `DNA_context_bin_width`: number of bins (radius) of DNA sequence used as input to the model 
+- `ins1_path`: path to insulation score file corresponding to first dataset of replicates 
+- `ins2_path`: path to insulation score file corresponding to second dataset of replicates (if it exists)
+- `train_coords_dict`: dictionary of the form '{"full_chr_names": [list of chroms]}' used for training; example is '{"full_chr_names": ["chr2L", "chr3L", "chr3R", "chr4", "chrX", "chrY"]}'
+- `val_coords_dict`: dictionary of the form '{"chrom_to_subset": chrom, "min_start": start_value}' used for validation; example is '{"chrom_to_subset": "chr2R", "min_start": 15000000}'
+- `test_coords_dict`: dictionary of the form '{"chrom_to_subset": chrom, "max_end": max_value}' used for testing; example is '{"chrom_to_subset": "chr2R", "max_end": 14996800}'
+- `bound_path`: path to boundary file corresponding to boundaries in first dataset of replicates
+- `boundary_length`: size of each boundary; this will also be the resolution or bin size of the .mcool file used generate insulation scores and boundaries
+- `batch_size`: number of data points used in each batch for training and evaluation
+- `learning_rate`: learning rate (default: `1e-4`)
+- `scheduler`: learning rate scheduler (default: `plateau`)
+- `conv_layers`: number of convolutional layers in model 
+- `conv_repeat`: number of convolutional blocks in model
+- `kernel_number`: number of kernels in first convolutional layer
+- `kernel_length`: kernel size in first convolutional layer 
+- `filter_number`: number of kernels in intermediate convolutional layers
+- `filter_size`: kernel size in intermediate convolutional layers
+- `h_layers`: number of hidden layers in head module 
+- `hidden_size`: size of each hidden layer 
+- `activation`: activation function (default: `GeLU`) 
+- `blacklist_path`: path to list of blacklisted regions
 
 After training, you will be able to visualize summary statistics of model performances in the folder. This includes scatterplots and histograms comparing predicted insulation with ground truth insulation.
 
