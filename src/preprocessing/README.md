@@ -11,7 +11,7 @@ The micro-C pipeline starts with raw fastq reads from your experiment and conver
     Start by creating conda environment:
 
     ```
-    conda env create --name envname --file=./microC_processing_env.yml
+    conda env create --name envname --file=microC_processing_env.yml
     ```
 
 2. Pre-Alignment
