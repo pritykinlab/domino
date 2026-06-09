@@ -17,7 +17,7 @@ pip install -e .
 
 ## Data preprocessing
 
-After setting up the environment, you will want to convert raw data into contact maps. We provide scripts that you can reference in the scr/processing folder. Please refer to the README.md file in the folder for instructions.
+After setting up the environment, you will want to convert raw data into contact maps. We provide scripts that you can reference in the `scr/processing` folder. Please refer to the `README.md` file in the folder for instructions.
 
 Briefly, the folder contains a pipeline that assumes that your data comes in the raw FASTQ files (paired end reads) for 3C data. A Snakefile can be used to automate converting paired end reads in FASTQ form to a .cool file. From here, you can use merge and zoomify cool files to generate a .mcool file. The script also computes insulation score and boundaries using the FAN-C package.
 
