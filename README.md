@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="domino_logo.png" width="400">
+</p>
+
 # Domino
 
 Domino, which stands for DNA-to-Insulation-Score Model for Analyzing Insulation of Chromatin, is a sequence-to-insulation deep learning framework. Here, we developed it specifically to model local chromatin insulation in Drosophila. In practice, however, it could be readily extended to any Hi-C or Micro-C (3C) datasets. This document outlines how to run Domino on your custom datasets.
