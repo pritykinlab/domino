@@ -376,27 +376,6 @@ if __name__ == '__main__':
     plt.savefig(output_path + '/TEST_neg_hist.png')
     plt.close()
 
-    test_df = TEST_dataset.df
-    pearson = stats.pearsonr(test_df['demeaned_ins_score_1'], test_df['demeaned_ins_score_2'])[0]
-    spearman = stats.spearmanr(test_df['demeaned_ins_score_1'], test_df['demeaned_ins_score_2'])[0]
-    mse = np.mean((test_df['demeaned_ins_score_1'] - test_df['demeaned_ins_score_2']) ** 2)
-
-    plt.hexbin(test_df['demeaned_ins_score_1'], test_df['demeaned_ins_score_2'], gridsize=200, cmap='viridis', bins='log', vmin=0.15)
-    max_val = max(test_df['demeaned_ins_score_1'].max(), test_df['demeaned_ins_score_2'].max())
-    min_val = min(test_df['demeaned_ins_score_1'].min(), test_df['demeaned_ins_score_2'].min())
-    plt.xlim(min_val, max_val)
-    plt.ylim(min_val, max_val)
-    plt.grid(True, which='both', linestyle='--', linewidth=0.5)
-    plt.xlabel('Mean-scaled insulation score (rep 1)')
-    plt.ylabel('Mean-scaled insulation score (rep 2)')
-    plt.title(f'Replicate performance (test set)')
-    plt.text(0.03, 0.95, f'PCC: {pearson:.3f}', transform=plt.gca().transAxes,
-        ha='left', va='top', fontsize=10, color='black')
-    plt.text(0.03, 0.90, f'SCC: {spearman:.3f}', transform=plt.gca().transAxes,
-        ha='left', va='top', fontsize=10, color='black')
-    plt.savefig(output_path + '/TEST_rep_scatter.png')
-    plt.close()
-
     ###################################################################################################
     # Save dataframes with predictions
     ###################################################################################################
@@ -427,27 +406,6 @@ if __name__ == '__main__':
     test_prediction = torch.cat(test_prediction, dim=0).cpu().numpy()
     test_prediction = test_prediction.reshape(-1, 3)
     print(test_prediction.shape)
-
-    val_df = VAL_dataset.df
-    pearson = stats.pearsonr(val_df['demeaned_ins_score_1'], val_df['demeaned_ins_score_2'])[0]
-    spearman = stats.spearmanr(val_df['demeaned_ins_score_1'], val_df['demeaned_ins_score_2'])[0]
-    mse = np.mean((val_df['demeaned_ins_score_1'] - val_df['demeaned_ins_score_2']) ** 2)
-
-    plt.hexbin(val_df['demeaned_ins_score_1'], val_df['demeaned_ins_score_2'], gridsize=200, cmap='viridis', bins='log', vmin=0.15)
-    max_val = max(val_df['demeaned_ins_score_1'].max(), val_df['demeaned_ins_score_2'].max())
-    min_val = min(val_df['demeaned_ins_score_1'].min(), val_df['demeaned_ins_score_2'].min())
-    plt.xlim(min_val, max_val)
-    plt.ylim(min_val, max_val)
-    plt.grid(True, which='both', linestyle='--', linewidth=0.5)
-    plt.xlabel('Mean-scaled insulation score (rep 1)')
-    plt.ylabel('Mean-scaled insulation score (rep 2)')
-    plt.title(f'Replicate performance (test set)')
-    plt.text(0.03, 0.95, f'PCC: {pearson:.3f}', transform=plt.gca().transAxes,
-        ha='left', va='top', fontsize=10, color='black')
-    plt.text(0.03, 0.90, f'SCC: {spearman:.3f}', transform=plt.gca().transAxes,
-        ha='left', va='top', fontsize=10, color='black')
-    plt.savefig(output_path + '/VAL_rep_scatter.png')
-    plt.close()
 
     pearson = stats.pearsonr(val_prediction[:, 0], val_prediction[:, 1])[0]
     spearman = stats.spearmanr(val_prediction[:, 0], val_prediction[:, 1])[0]

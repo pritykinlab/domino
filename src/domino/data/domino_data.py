@@ -50,6 +50,7 @@ def preprocess_data(
     """
     Returns combined dataframe and demeaned insulation score values.
     """
+
     ins_score1 = process_bed_file_df(ins1_path, target_col='ins_score')
     ins_score2 = process_bed_file_df(ins2_path, target_col='ins_score')
     ins_score1['copy_index'] = ins_score1.index
@@ -60,35 +61,36 @@ def preprocess_data(
     # subset insulation df into boundaries and non-boundaries
     ins_score_w_bound1 = ins_score1.merge(bound1, on=['chrom', 'start', 'end']) 
     ins_score_wo_bound1 = ins_score1[~ins_score1['copy_index'].isin(ins_score_w_bound1['copy_index'])] 
-
     # positive examples where context is within bounds and context contains no NaNs 
     idxs_pos = [np.arange(i-demean_context_bin_width, i+demean_context_bin_width+1) for i in ins_score_w_bound1['copy_index']]
     idxs_pos = np.array(idxs_pos)
     condition = np.any(idxs_pos < 0, axis=1) | np.any(idxs_pos >= len(ins_score1), axis=1)
     idxs_pos = idxs_pos[~condition]
     mid_pos = idxs_pos[:,demean_context_bin_width]
-    y_pos = np.array([np.array(ins_score1['ins_score'][idx_arr]) for idx_arr in idxs_pos]) # context with middle bin
+    y1_pos = np.array([np.array(ins_score1['ins_score'][idx_arr]) for idx_arr in idxs_pos]) # context with middle bin
     X_pos = ins_score1.iloc[mid_pos] 
-    condition = np.isnan(y_pos).any(axis=1) | np.isinf(y_pos).any(axis=1)
+    condition = np.isnan(y1_pos).any(axis=1) | np.isinf(y1_pos).any(axis=1)
     X_pos = X_pos[~condition]
-    y_pos = y_pos[~condition]
+    y1_pos = y1_pos[~condition]
 
     # sample negative examples where context is within bounds and context contains no NaNs 
     # idxs_neg = [np.arange(i+20000-10, i+20000+11) for i in ins_score_w_bound1['copy_index']]
     idxs_neg = [np.arange(i-demean_context_bin_width, i+demean_context_bin_width+1) for i in ins_score_wo_bound1['copy_index']]
     idxs_neg = np.array(idxs_neg)
-    
+
+
     np.random.seed(42)
-    i = np.random.choice(idxs_neg.shape[0], y_pos.shape[0], replace=False)
+    i = np.random.choice(idxs_neg.shape[0], y1_pos.shape[0], replace=False)
     idxs_neg = idxs_neg[i]
     condition = np.any(idxs_neg < 0, axis=1) | np.any(idxs_neg >= len(ins_score1), axis=1)
     idxs_neg = idxs_neg[~condition]
     mid_neg = idxs_neg[:,demean_context_bin_width]
-    y_neg = np.array([np.array(ins_score1['ins_score'][idx_arr]) for idx_arr in idxs_neg])
+    y1_neg = np.array([np.array(ins_score1['ins_score'][idx_arr]) for idx_arr in idxs_neg])
     X_neg = ins_score1.iloc[mid_neg]
-    condition = np.isnan(y_neg).any(axis=1) | np.isinf(y_neg).any(axis=1)
+    condition = np.isnan(y1_neg).any(axis=1) | np.isinf(y1_neg).any(axis=1)
     X_neg = X_neg[~condition]
-    y_neg = y_neg[~condition]
+    y1_neg = y1_neg[~condition]
+
 
     # negative and positive insulations
     X12_pos = X_pos.merge(ins_score2, on=['chrom', 'start', 'end'], suffixes=('_1', '_2'))
@@ -102,17 +104,6 @@ def preprocess_data(
     idxs2_neg = [np.arange(i-demean_context_bin_width, i+demean_context_bin_width+1) for i in X12_neg['copy_index_2']]
     idxs2_neg = np.array(idxs2_neg)
     y2_neg = np.array([np.array(ins_score2['ins_score'][idx_arr]) for idx_arr in idxs2_neg])
-
-    # IMPORTANT: filters for all examples where both rep1 and rep2 don't have an NaN (sanity check)
-    condition = np.isnan(y2_pos).any(axis=1) | np.isinf(y2_pos).any(axis=1)
-    X12_pos = X12_pos[~condition]
-    y1_pos = y_pos[~condition]
-    y2_pos = y2_pos[~condition]
-
-    condition = np.isnan(y2_neg).any(axis=1) | np.isinf(y2_neg).any(axis=1)
-    X12_neg = X12_neg[~condition]
-    y1_neg = y_neg[~condition]
-    y2_neg = y2_neg[~condition]
 
     demeaned_y1_pos = y1_pos - np.mean(y1_pos, axis=1)[:, np.newaxis]
     middle_points1_pos = demeaned_y1_pos[:, demean_context_bin_width]
