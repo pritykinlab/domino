@@ -41,8 +41,8 @@ python train_domino_model.py --out_folder=$out_folder --genome_path=$genome_path
                 --demean_context_bin_width=$demean_context_bin_width --DNA_context_bin_width=$DNA_context_bin_width \
                 --ins1_path=$ins1_path --ins2_path=$ins2_path --bound_path=$bound_path \
                 --train_coords_dict="${train_coords_dict}" --val_coords_dict="${val_coords_dict}" --test_coords_dict="${test_coords_dict}" \
-                --boundary_length=200 --batch_size=32 --learning_rate=1e-4 --scheduler=plateau --conv_layers=$conv_layers \
+                --boundary_length=200 --batch_size=32 --learning_rate=1e-3 --scheduler=plateau --conv_layers=$conv_layers \
                 --conv_repeat=1 --kernel_number=512 --kernel_length=$kernel_length --filter_number=256 --filter_size=5 \
-                --h_layers=4 --hidden_size=64 --activation=$activation 
+                --h_layers=4 --hidden_size=64 --activation=$activation --blacklist_path=$blacklist_path  
 
 echo "Finished training model."
