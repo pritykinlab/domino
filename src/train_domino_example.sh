@@ -11,8 +11,6 @@
 ######################################################################  
 
 # FOLDER NAMES
-# ins_dir="insulations/insulation_files"
-# bound_dir="boundaries"
 out_folder="output"
 
 # FILE NAMES
