@@ -11,12 +11,12 @@
 ######################################################################  
 
 # FOLDER NAMES
-genome_path=dm6.fa
-ins_dir="insulations/insulation_files"
-bound_dir="boundaries"
+# ins_dir="insulations/insulation_files"
+# bound_dir="boundaries"
 out_folder="output"
 
 # FILE NAMES
+genome_path=dm6.fa
 ins1_path='insulations/insulation_files/dm6_rep1.bed'
 ins2_path='insulations/insulation_files/dm6_rep2.bed'
 bound_path='boundaries/dm6_rep1.bed'
