@@ -14,7 +14,7 @@
 out_folder="path/to/output/folder"
 
 # FILE NAMES
-genome_path=dm6.fa
+genome_path='/path/to/dm6.fa'
 ins1_path='path/to/insulation/for/dm6_rep1.bed'
 ins2_path='path/to/insulation/for/dm6_rep2.bed'
 bound_path='path/to/boundaries/for/dm6_rep2.bed'
