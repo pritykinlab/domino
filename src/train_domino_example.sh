@@ -11,15 +11,15 @@
 ######################################################################  
 
 # FOLDER NAMES
-out_folder="output"
+out_folder="path/to/output/folder"
 
 # FILE NAMES
 genome_path=dm6.fa
-ins1_path='insulations/insulation_files/dm6_rep1.bed'
-ins2_path='insulations/insulation_files/dm6_rep2.bed'
-bound_path='boundaries/dm6_rep1.bed'
+ins1_path='path/to/insulation/for/dm6_rep1.bed'
+ins2_path='path/to/insulation/for/dm6_rep2.bed'
+bound_path='path/to/boundaries/for/dm6_rep2.bed'
 # if applicable
-blacklist_path='annotations/dm6-blacklist.v2.bed'
+blacklist_path='/path/to/annotations/dm6-blacklist.v2.bed'
 
 # PARAMETERS
 delta=2
@@ -36,7 +36,7 @@ val_coords_dict='{"chrom_to_subset": "chr2R", "min_start": 15000000}'
 test_coords_dict='{"chrom_to_subset": "chr2R", "max_end": 14996800}'
 
 
-python train_domino_model.py --out_folder=$out_folder --genome_path=$genome_path \
+python path/to/train_domino_model.py --out_folder=$out_folder --genome_path=$genome_path \
                 --delta=$delta --ins_window_size=$ins_ws --model_type='DominoSingleOutput' \
                 --demean_context_bin_width=$demean_context_bin_width --DNA_context_bin_width=$DNA_context_bin_width \
                 --ins1_path=$ins1_path --ins2_path=$ins2_path --bound_path=$bound_path \
